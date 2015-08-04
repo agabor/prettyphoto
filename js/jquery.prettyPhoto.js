@@ -15,7 +15,7 @@
 			slideshow: 5000, /* false OR interval time in ms */
 			autoplay_slideshow: false, /* true/false */
 			opacity: 0.80, /* Value between 0 and 1 */
-			show_title: true, /* true/false */
+			show_title: false, /* true/false */
 			allow_resize: true, /* Resize the photos bigger than viewport. true/false */
 			allow_expand: true, /* Allow the user to expand a resized image. true/false */
 			default_width: 500,
@@ -573,26 +573,20 @@
 			// Define them in case there's no resize needed
 			imageWidth = width, imageHeight = height;
 
-			if( ((pp_containerWidth > windowWidth) || (pp_containerHeight > windowHeight)) && doresize && settings.allow_resize && !percentBased) {
+			var optHeight = windowHeight - 45;
+			if (doresize && settings.allow_resize && !percentBased) {
 				resized = true, fitting = false;
 			
-				while (!fitting){
-					if((pp_containerWidth > windowWidth)){
-						imageWidth = (windowWidth - 200);
-						imageHeight = (height/width) * imageWidth;
-					}else if((pp_containerHeight > windowHeight)){
-						imageHeight = (windowHeight - 200);
-						imageWidth = (width/height) * imageHeight;
-					}else{
-						fitting = true;
-					};
+				imageWidth = windowWidth;
+				imageHeight = (height/width) * imageWidth;
+				if ((pp_containerHeight > optHeight)) {
+					imageHeight = optHeight;
+					imageWidth = (width/height) * imageHeight;
+				}
 
-					pp_containerHeight = imageHeight, pp_containerWidth = imageWidth;
-				};
-			
-
+				pp_containerHeight = imageHeight, pp_containerWidth = imageWidth;
 				
-				if((pp_containerWidth > windowWidth) || (pp_containerHeight > windowHeight)){
+				if ((pp_containerWidth > windowWidth) || (pp_containerHeight > optHeight)) {
 					_fitToViewport(pp_containerWidth,pp_containerHeight)
 				};
 				
