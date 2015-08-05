@@ -670,12 +670,16 @@
 				projectedTop = (windowHeight/2) + scroll_pos['scrollTop'] - (contentHeight/2);
 				if(projectedTop < 0) projectedTop = 0;
 				
-				if(contentHeight > windowHeight)
-					return;
+				//if(contentHeight > windowHeight)
+				//	return;
+			
+				var projectedLeft = (windowWidth/2) + scroll_pos['scrollLeft'] - (contentwidth/2);
+				if (windowWidth <= contentwidth)
+					projectedLeft = 0;
 
 				$pp_pic_holder.css({
 					'top': projectedTop,
-					'left': (windowWidth/2) + scroll_pos['scrollLeft'] - (contentwidth/2)
+					'left': projectedLeft
 				});
 			};
 		};
