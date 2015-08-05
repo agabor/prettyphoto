@@ -579,16 +579,12 @@
 			
 				imageWidth = windowWidth;
 				imageHeight = (height/width) * imageWidth;
-				if ((pp_containerHeight > optHeight)) {
+				if ((imageHeight > optHeight)) {
 					imageHeight = optHeight;
 					imageWidth = (width/height) * imageHeight;
 				}
 
 				pp_containerHeight = imageHeight, pp_containerWidth = imageWidth;
-				
-				if ((pp_containerWidth > windowWidth) || (pp_containerHeight > optHeight)) {
-					_fitToViewport(pp_containerWidth,pp_containerHeight)
-				};
 				
 				_getDimensions(imageWidth,imageHeight);
 			};
