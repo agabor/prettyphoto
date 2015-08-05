@@ -493,9 +493,6 @@
 		function _showContent(){
 			$('.pp_loaderIcon').hide();
 
-			// Calculate the opened top position of the pic holder
-			projectedTop = scroll_pos['scrollTop'] + ((windowHeight/2) - (pp_dimensions['containerHeight']/2));
-			if(projectedTop < 0) projectedTop = 0;
 
 			$ppt.fadeTo(settings.animation_speed,1);
 
@@ -508,8 +505,6 @@
 			
 			// Resize picture the holder
 			$pp_pic_holder.animate({
-				'top': projectedTop,
-				'left': ((windowWidth/2) - (pp_dimensions['containerWidth']/2) < 0) ? 0 : (windowWidth/2) - (pp_dimensions['containerWidth']/2),
 				width:pp_dimensions['containerWidth']
 			},settings.animation_speed,function(){
 				$pp_pic_holder.find('.pp_hoverContainer,#fullResImage').height(pp_dimensions['height']).width(pp_dimensions['width']);
@@ -530,7 +525,7 @@
 				if(settings.autoplay_slideshow && !pp_slideshow && !pp_open) $.prettyPhoto.startSlideshow();
 				
 				settings.changepicturecallback(); // Callback!
-				
+				_center_overlay();
 				pp_open = true;
 			});
 			
@@ -667,19 +662,18 @@
 				scroll_pos = _get_scroll();
 				contentHeight = $pp_pic_holder.height(), contentwidth = $pp_pic_holder.width();
 
-				projectedTop = (windowHeight/2) + scroll_pos['scrollTop'] - (contentHeight/2);
-				if(projectedTop < 0) projectedTop = 0;
-				
-				//if(contentHeight > windowHeight)
-				//	return;
+				projectedTop = (windowHeight/2) - (contentHeight/2) - 25;
+				if(projectedTop < -25) 
+					projectedTop = -25;
 			
-				var projectedLeft = (windowWidth/2) + scroll_pos['scrollLeft'] - (contentwidth/2);
-				if (windowWidth <= contentwidth)
+				var projectedLeft = (windowWidth/2) - (contentwidth/2);
+				if (projectedLeft < 0)
 					projectedLeft = 0;
 
 				$pp_pic_holder.css({
 					'top': projectedTop,
-					'left': projectedLeft
+					'left': projectedLeft,
+					'position': 'fixed'
 				});
 			};
 		};
